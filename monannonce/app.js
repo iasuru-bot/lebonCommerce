@@ -3,6 +3,8 @@ const bodyParser = require('body-parser');
 const app = express();
 const initRoutes = require('./routes')
 
+app.use(express.json())
+
 initRoutes(app)
 
 

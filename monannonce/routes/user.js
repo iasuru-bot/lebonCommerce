@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-
+const {validateUser} = require('../middleware/users')
 
 // --- Routes pour les utilisateurs -------------------------------------
 
@@ -9,7 +9,7 @@ router.post('/register', (req, res) => {
     res.send('Créer un nouvel utilisateur');
 });
 
-router.post('/login', (req, res) => {
+router.post('/login', validateUser, (req, res) => {
     // Logique pour connecter un utilisateur
     res.send('Connexion utilisateur');
 });
