@@ -24,11 +24,6 @@ router.patch('/:id', (req, res) => {
     res.send(`Mettre à jour l'utilisateur avec ID ${req.params.id}`);
 });
 
-router.delete('/:id', (req, res) => {
-    // Logique pour supprimer un utilisateur
-    res.send(`Supprimer l'utilisateur avec ID ${req.params.id}`);
-});
-
 router.get('/:id/annonces', (req, res) => {
     // Logique pour récupérer les annonces d'un utilisateur spécifique
     res.send(`Récupérer les annonces de l'utilisateur avec ID ${req.params.id}`);
