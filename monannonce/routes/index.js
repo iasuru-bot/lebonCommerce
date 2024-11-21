@@ -1,11 +1,15 @@
-const usersRoutes = require('./user')
+const usersRoutes = require('./utilisateur')
 const categsRoutes = require('./categorie')
 const annoncesRoutes = require('./annonce')
 const signalementsRoutes = require('./signalement')
 const adminRoutes = require('./admin')
+const authenticateRoutes = require('./authenticate')
+const {validationAuthentication} = require('../middleware/authorization')
 
 function initRoutes(app){
-    app.use('/user', usersRoutes)
+    app.use('/public', authenticateRoutes)
+    app.use(validationAuthentication)
+    app.use('/utilisateur', usersRoutes)
     app.use('/categorie',categsRoutes)
     app.use('/annonce',annoncesRoutes)
     app.use('/signalement', signalementsRoutes)

@@ -1,5 +1,8 @@
 const express = require('express')
 const router = express.Router()
+const {body} = require('express-validator')
+const annonceValidator = require('../middleware/annonce');
+const handleValidationErrors = require('./help');
 
 // --- Routes pour les annonces -------------------------------------
 
@@ -13,7 +16,7 @@ router.get('/chercher', (req, res) => {
     res.send('Récupérer des annonces par recherche');
 });
 
-router.post('/', (req, res) => {
+router.post('/',annonceValidator, handleValidationErrors, (req, res) => {
     // Logique pour créer une annonce
     res.send('Créer une nouvelle annonce');
 });
@@ -23,7 +26,12 @@ router.get('/:id', (req, res) => {
     res.send(`Récupérer l'annonce avec ID ${req.params.id}`);
 });
 
-router.patch('/:id', (req, res) => {
+router.patch('/:id',body("annonce").notEmpty(), (req, res) => {
+    const result = validationResult(req);
+    if (!result.isEmpty()) {
+        res.status(400).send("Manque d'informations annonce");
+    }
+
     // Logique pour mettre à jour une annonce
     res.send(`Mettre à jour l'annonce avec ID ${req.params.id}`);
 });
