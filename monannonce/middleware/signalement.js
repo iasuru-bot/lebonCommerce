@@ -16,9 +16,6 @@ const signalementValidator = [
     body('annonceId')
         .isInt().withMessage('L\'ID de l\'annonce doit être un entier.')
         .notEmpty().withMessage('L\'ID de l\'annonce est obligatoire.'),
-    body('utilisateurId')
-        .isInt().withMessage('L\'ID de l\'utilisateur doit être un entier.')
-        .notEmpty().withMessage('L\'ID de l\'utilisateur est obligatoire.'),
 ];
 
 module.exports = signalementValidator;

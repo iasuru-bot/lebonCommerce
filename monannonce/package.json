@@ -8,14 +8,17 @@
     "faker": "^5.5.3",
     "jsonwebtoken": "^9.0.2",
     "mariadb": "^3.4.0",
-    "sequelize": "^6.37.5"
+    "sequelize": "^6.37.5",
+    "nodemailer": "^6.9.1"
   },
   "type": "commonjs",
   "name": "monannonce",
   "version": "1.0.0",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon app.js",
+    "ngrok": "ngrok http $NGROK_PORT"
   },
   "author": "",
   "license": "ISC",

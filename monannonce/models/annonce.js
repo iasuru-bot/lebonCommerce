@@ -12,6 +12,7 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       this.belongsTo(models.Categorie)
       this.hasMany(models.Signalement)
+      this.belongsTo(models.Utilisateur)
     }
   }
   Annonce.init({

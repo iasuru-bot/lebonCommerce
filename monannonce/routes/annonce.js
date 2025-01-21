@@ -3,49 +3,31 @@ const router = express.Router()
 const {body} = require('express-validator')
 const annonceValidator = require('../middleware/annonce');
 const handleValidationErrors = require('./help');
+const {
+    searchAnnonces,
+    getAllAnnonces,
+    getAnnonceById,
+    deleteAnnonce,
+    getSignalementsByAnnonceId,
+    updateAnnonce,
+    createAnnonce
+} = require('../services/annonces');
 
 // --- Routes pour les annonces -------------------------------------
 
-router.get('/', (req, res) => {
-    // Logique pour récupérer toutes les annonces
-    res.send('Récupérer toutes les annonces');
-});
+router.get('/', getAllAnnonces);
 
-router.get('/chercher', (req, res) => {
-    // Logique pour rechercher des annonces
-    res.send('Récupérer des annonces par recherche');
-});
+router.get('/chercher', searchAnnonces);
 
-router.post('/',annonceValidator, handleValidationErrors, (req, res) => {
-    // Logique pour créer une annonce
-    res.send('Créer une nouvelle annonce');
-});
+router.post('/', annonceValidator, handleValidationErrors, createAnnonce);
 
-router.get('/:id', (req, res) => {
-    // Logique pour récupérer une annonce spécifique
-    res.send(`Récupérer l'annonce avec ID ${req.params.id}`);
-});
+router.get('/:id', getAnnonceById);
 
-router.patch('/:id',body("annonce").notEmpty(), (req, res) => {
-    const result = validationResult(req);
-    if (!result.isEmpty()) {
-        res.status(400).send("Manque d'informations annonce");
-    }
+router.patch('/:id', annonceValidator, handleValidationErrors, updateAnnonce);
 
-    // Logique pour mettre à jour une annonce
-    res.send(`Mettre à jour l'annonce avec ID ${req.params.id}`);
-});
+router.delete('/:id', deleteAnnonce);
 
-router.delete('/:id', (req, res) => {
-    // Logique pour supprimer une annonce
-    res.send(`Supprimer l'annonce avec ID ${req.params.id}`);
-});
-
-
-router.get('/:id/signalements', (req, res) => {
-    // Logique pour récupérer les signalements d'une annonce spécifique
-    res.send(`Récupérer les signalements pour l'annonce avec ID ${req.params.id}`);
-});
+router.get('/:id/signalements', getSignalementsByAnnonceId);
 
 
 module.exports = router

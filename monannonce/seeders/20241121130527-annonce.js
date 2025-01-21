@@ -24,7 +24,7 @@ module.exports = {
         statut: randomElement(typesSignalement),
         categorieId: faker.datatype.number({ min: 1, max: 10 }), 
         utilisateurId: faker.datatype.number({ min: 1, max: 20 }),
-         datePublication: faker.date.past(),
+        datePublication: faker.date.past(),
         createdAt: new Date(),
         updatedAt: new Date(),
       })

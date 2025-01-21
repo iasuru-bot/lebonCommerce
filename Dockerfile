@@ -6,6 +6,7 @@ ENV HOME=/home/app
 #COPY package.json $HOME/
 #RUN chown -R app:app $HOME/*
 
+# ...existing code...
 #USER root
 WORKDIR $HOME
 
@@ -13,4 +14,6 @@ WORKDIR $HOME
 
 #RUN npm init
 RUN npm install -g nodemon
+
 EXPOSE 3000
+

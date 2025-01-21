@@ -10,7 +10,7 @@ const { getAllUtilisateurs, getUtilisateurById, updateUtilisateur,getAnnoncesByI
 
 router.get('/:id', getUtilisateurById);
 
-router.patch('/:id',utilisateurValidator,updateUtilisateur); 
+router.patch('/:id',utilisateurValidator,handleValidationErrors,updateUtilisateur); 
 
 router.get('/:id/annonces', getAnnoncesByIdUtilisateur);
 

@@ -1,24 +1,19 @@
-const express = require('express')
-const router = express.Router()
-const {body} = require('express-validator')
+const express = require('express');
+const router = express.Router();
 const signalementValidator = require('../middleware/signalement');
 const handleValidationErrors = require('./help');
+const {
+    getAllSignalements,
+    createSignalement,
+    getSignalementByUserId
+} = require('../services/signalements');
 
 // --- Routes pour les signalements -------------------------------------
 
-router.get('/', (req, res) => {
-    // Logique pour récupérer tous les signalements
-    res.send('Récupérer tous les signalements');
-});
+router.get('/', getAllSignalements);
 
-router.post('/',signalementValidator,handleValidationErrors, (req, res) => {
-    // Logique pour créer un signalement
-    res.send('Créer un nouveau signalement');
-});
+router.post('/', signalementValidator, handleValidationErrors, createSignalement);
 
-router.get('/:id_user', (req, res) => {
-    // Logique pour récupérer un signalement spécifique
-    res.send(`Récupérer le signalement avec ID d'un user${req.params.id}`);
-});
+router.get('/:id_user', getSignalementByUserId);
 
 module.exports = router

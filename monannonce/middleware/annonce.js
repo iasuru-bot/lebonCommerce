@@ -10,12 +10,6 @@ const annonceValidator = [
     body('prix')
         .isFloat({ min: 0 }).withMessage('Le prix doit être un nombre positif.')
         .notEmpty().withMessage('Le prix est obligatoire.'),
-    body('datePublication')
-        .optional()
-        .isISO8601().withMessage('La date de publication doit être une date valide.'),
-    body('statut')
-        .isString().withMessage('Le statut doit être une chaîne de caractères.')
-        .notEmpty().withMessage('Le statut est obligatoire.'),
     body('categorieId')
         .isInt().withMessage('L\'ID de catégorie doit être un entier.')
         .notEmpty().withMessage('La catégorie est obligatoire.'),
