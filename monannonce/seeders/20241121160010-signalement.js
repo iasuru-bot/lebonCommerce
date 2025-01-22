@@ -6,6 +6,14 @@ const randomElement = (array) => array[Math.floor(Math.random() * array.length)]
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
+    const { Annonce, Utilisateur } = require('../models'); // Assurez-vous d'importer les modèles nécessaires
+
+    const annonces = await Annonce.findAll({ attributes: ['id'] });
+    const utilisateurs = await Utilisateur.findAll({ attributes: ['id'] });
+
+    const annonceIds = annonces.map(a => a.id);
+    const utilisateurIds = utilisateurs.map(u => u.id);
+
     const signalements = [];
 
     const typesSignalement = ['RECLAMATION', 'SPAM', 'AUTRE'];
@@ -15,8 +23,8 @@ module.exports = {
         dateSignalement: faker.date.recent(),
         message: faker.lorem.sentence(),
         typeSignalement: randomElement(typesSignalement), // Sélectionne un type aléatoire
-        annonceId: faker.datatype.number({ min: 1, max: 20 }), // Supposez que 20 annonces existent
-        utilisateurId: faker.datatype.number({ min: 1, max: 10 }), // Supposez que 10 utilisateurs existent
+        annonceId: randomElement(annonceIds), // Utilise un ID d'annonce valide
+        utilisateurId: randomElement(utilisateurIds), // Utilise un ID d'utilisateur valide
         email: faker.internet.email(),
         createdAt: new Date(),
         updatedAt: new Date(),

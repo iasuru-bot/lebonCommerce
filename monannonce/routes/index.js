@@ -4,6 +4,7 @@ const annoncesRoutes = require('./annonce')
 const signalementsRoutes = require('./signalement')
 const adminRoutes = require('./admin')
 const authenticateRoutes = require('./authenticate')
+const fileRoutes = require('./file')
 const { validationAuthentication, authenticate } = require('../middleware/authorization')
 
 function initRoutes(app) {
@@ -15,6 +16,7 @@ function initRoutes(app) {
     app.use('/annonce', annoncesRoutes)
     app.use('/signalement', signalementsRoutes)
     app.use('/admin', adminRoutes)
+    app.use('/file', fileRoutes)
 }
 
 module.exports = initRoutes; 

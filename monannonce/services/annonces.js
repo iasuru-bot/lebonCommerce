@@ -84,8 +84,8 @@ async function createAnnonce(req, res, next) {
             datePublication: new Date(),
             statut: 'disponible',
             CategorieId: categorieId,
-            UtilisateurId: utilisateur.id
-            
+            UtilisateurId: utilisateur.id,
+            filePath,
         });
 
         res.status(201).json(newAnnonce);

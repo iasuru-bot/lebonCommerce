@@ -40,6 +40,8 @@ async function createSignalement(req, res, next) {
             message,
             typeSignalement,
             email,
+            AnnonceId:annonceId,
+            UtilisateurId: utilisateur.id
         });
 
 

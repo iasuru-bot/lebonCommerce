@@ -19,24 +19,28 @@ module.exports = (sequelize, DataTypes) => {
     titre: {
       type: DataTypes.STRING,
       allowNull: false,
-  },
-  description: {
+    },
+    description: {
       type: DataTypes.TEXT,
       allowNull: false,
-  },
-  prix: {
+    },
+    prix: {
       type: DataTypes.FLOAT,
       allowNull: false,
-  },
-  datePublication: {
+    },
+    datePublication: {
       type: DataTypes.DATE,
       defaultValue: DataTypes.NOW,
-  },
-  statut: {
+    },
+    statut: {
       type: DataTypes.STRING,
       allowNull: false,
       defaultValue: 'visible',
-  }
+    },
+    filePath: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
   }, {
     sequelize,
     modelName: 'Annonce',

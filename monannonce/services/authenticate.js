@@ -32,10 +32,11 @@ async function register(req, res, next) {
         const html = `<p>Bonjour ${prenom},</p><p>Merci de vous être inscrit sur Leboncommerce !</p><p>Cordialement,<br>L'équipe Leboncommerce</p>`;
 
         await mailer(from, to, subject, text, html);
+        const { motDePasse: _, ...userWithoutPassword } = utilisateur;
 
         return res.status(201).json({
             status: "Succès",
-            utilisateur: utilisateur
+            utilisateur: userWithoutPassword
         });
     } catch (error) {
         await transaction.rollback();
@@ -57,10 +58,14 @@ async function login(req, res) {
         if (!isPasswordValid) return res.status(401).json({ status: "incorrect password" });
 
         const token = jwt.sign({ id: utilisateur.email }, 'secret-key');
+        
+        // Exclure le mot de passe de l'objet utilisateur avant de le renvoyer
+        const { motDePasse: _, ...userWithoutPassword } = utilisateur.toJSON();
 
         return res.status(201).json({
             token,
-            utilisateur
+            utilisateur: userWithoutPassword
+
         });
     } catch (error) {
         return res.status(400).json({
