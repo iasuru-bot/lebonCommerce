@@ -2,12 +2,14 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const { Utilisateur, sequelize } = require('../models');
 const { mailer } = require('./mailer');
+const crypto = require('crypto');
 
 module.exports = {
     register,
     login,
+    requestPasswordReset,
+    resetPassword,
 };
-
 
 async function register(req, res, next) {
     const transaction = await sequelize.transaction();
@@ -46,8 +48,6 @@ async function register(req, res, next) {
 
 
 async function login(req, res) {
-    const transaction = await sequelize.transaction();
-
     try {
         const { email, motDePasse } = req.body;
         const utilisateur = await Utilisateur.findOne({ where: { email } });
@@ -67,5 +67,50 @@ async function login(req, res) {
             status: "Erreur",
             message: error.message
         });
+    }
+}
+
+async function requestPasswordReset(req, res) {
+    const { email } = req.body;
+    const utilisateur = await Utilisateur.findOne({ where: { email } });
+
+    let subject, text, html;
+    console.log(process.env.FRONTEND_URL)
+
+    if (!utilisateur) {
+        subject = 'Réinitialisation de mot de passe demandée';
+        text = `Bonjour,\n\nNous avons reçu une demande de réinitialisation de mot de passe pour cet email. Si vous n'avez pas de compte, vous pouvez en créer un ici : ${process.env.FRONTEND_URL}/SignUp\n\nCordialement,\nL'équipe Leboncommerce`;
+        html = `<p>Bonjour,</p><p>Nous avons reçu une demande de réinitialisation de mot de passe pour cet email. Si vous n'avez pas de compte, vous pouvez en créer un ici : <a href="${process.env.FRONTEND_URL}/SignUp">Créer un compte</a></p><p>Cordialement,<br>L'équipe Leboncommerce</p>`;
+    } else {
+        const token = crypto.randomBytes(32).toString('hex');
+        const resetToken = jwt.sign({ id: utilisateur.id, token }, 'secret-key', { expiresIn: '1h' });
+
+        subject = 'Réinitialisation de mot de passe';
+        text = `Bonjour,\n\nCliquez sur le lien suivant pour réinitialiser votre mot de passe : ${process.env.FRONTEND_URL}/ResetPassword?token=${resetToken}\n\nCordialement,\nL'équipe Leboncommerce`;
+        html = `<p>Bonjour,</p><p>Cliquez sur le lien suivant pour réinitialiser votre mot de passe : <a href="${process.env.FRONTEND_URL}/ResetPassword?token=${resetToken}">Réinitialiser le mot de passe</a></p><p>Cordialement,<br>L'équipe Leboncommerce</p>`;
+    }
+
+    const from = '"Leboncommerce" <no-reply@leboncommerce.com>';
+    const to = email;
+
+    await mailer(from, to, subject, text, html);
+
+    return res.status(200).json({ status: "Email de réinitialisation envoyé" });
+}
+
+async function resetPassword(req, res) {
+    const { token, newPassword } = req.body;
+    try {
+        const decoded = jwt.verify(token, 'secret-key');
+        const utilisateur = await Utilisateur.findByPk(decoded.id);
+        if (!utilisateur) return res.status(400).json({ status: "Utilisateur non trouvé" });
+
+        const hashedPassword = await bcrypt.hash(newPassword, 8);
+        utilisateur.motDePasse = hashedPassword;
+        await utilisateur.save();
+
+        return res.status(200).json({ status: "Mot de passe réinitialisé avec succès" });
+    } catch (error) {
+        return res.status(400).json({ status: "Token invalide ou expiré" });
     }
 }
