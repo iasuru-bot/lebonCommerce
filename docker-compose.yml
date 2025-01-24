@@ -54,4 +54,4 @@ services:
     ports:
       - "4040:4040" # Port pour accéder à l'interface web de Ngrok
     environment:
-      - NGROK_AUTHTOKEN=2gXmbVi1hTpmeOjE03disgKRWr5_3WC3DaNktAuf3teZb1bNd
+      - NGROK_AUTHTOKEN=2gXmn5P8oCI3LqnDClsiG4yWlNu_53WijWsZRxUrXLnatSJnp

@@ -1,4 +1,4 @@
-const { Signalement, Annonce , Utilisateur } = require("../models");
+const { Signalement, Annonce, Utilisateur } = require("../models");
 const { mailer } = require('./mailer');
 
 module.exports = {
@@ -18,13 +18,11 @@ async function getAllSignalements(req, res, next) {
     }
 }
 
-
-
 async function createSignalement(req, res, next) {
     try {
         const { message, typeSignalement, email, annonceId } = req.body;
 
-    
+
         const utilisateur = await Utilisateur.findOne({ where: { email: req.userEmail } });
         if (!utilisateur) {
             return res.status(404).json({ error: 'Utilisateur not found' });
@@ -40,7 +38,7 @@ async function createSignalement(req, res, next) {
             message,
             typeSignalement,
             email,
-            AnnonceId:annonceId,
+            AnnonceId: annonceId,
             UtilisateurId: utilisateur.id
         });
 

@@ -3,7 +3,7 @@ var faker = require('faker')
 
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
-  async up (queryInterface, Sequelize) {
+  async up(queryInterface, Sequelize) {
     /**
      * Add seed commands here.
      *
@@ -12,8 +12,8 @@ module.exports = {
      *   name: 'John Doe',
      *   isBetaMember: false
      * }], {});
-    */    
-   var dummyJSON = new Set();
+    */
+    var dummyJSON = new Set();
     while (dummyJSON.size < 20) {
       dummyJSON.add(faker.commerce.department(),
       )
@@ -28,7 +28,7 @@ module.exports = {
     await queryInterface.bulkInsert('Categories', categories, {});
   },
 
-  async down (queryInterface, Sequelize) {
+  async down(queryInterface, Sequelize) {
     /**
      * Add commands to revert seed here.
      *

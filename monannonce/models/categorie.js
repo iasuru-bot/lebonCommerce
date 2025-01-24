@@ -17,7 +17,7 @@ module.exports = (sequelize, DataTypes) => {
     nom: {
       type: DataTypes.STRING,
       allowNull: false,
-  },
+    },
   }, {
     sequelize,
     modelName: 'Categorie',

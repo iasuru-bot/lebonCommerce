@@ -8,7 +8,7 @@ const signalementValidator = [
         .isString().withMessage('Le message doit être une chaîne de caractères.')
         .notEmpty().withMessage('Le message est obligatoire.'),
     body('typeSignalement')
-        .isIn(['FRAUDE', 'SPAM', 'RECLAMATION','AUTRE']).withMessage('Le type de signalement doit être FRAUDE, SPAM ou AUTRE.')
+        .isIn(['FRAUDE', 'SPAM', 'RECLAMATION', 'AUTRE']).withMessage('Le type de signalement doit être FRAUDE, SPAM ou AUTRE.')
         .notEmpty().withMessage('Le type de signalement est obligatoire.'),
     body('email')
         .isEmail().withMessage('L\'email doit être valide.')

@@ -18,7 +18,7 @@ module.exports = {
 
     const typesSignalement = ['RECLAMATION', 'SPAM', 'AUTRE'];
 
-    for (let i = 0; i < 50; i++) { 
+    for (let i = 0; i < 50; i++) {
       signalements.push({
         dateSignalement: faker.date.recent(),
         message: faker.lorem.sentence(),

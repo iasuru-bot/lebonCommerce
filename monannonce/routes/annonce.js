@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const {body} = require('express-validator')
+const { body } = require('express-validator')
 const annonceValidator = require('../middleware/annonce');
 const handleValidationErrors = require('./help');
 const {

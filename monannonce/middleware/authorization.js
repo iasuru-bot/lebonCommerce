@@ -1,4 +1,4 @@
-const jwt = require ("jsonwebtoken")
+const jwt = require("jsonwebtoken")
 const { Utilisateur } = require('../models');
 
 module.exports = {
@@ -6,13 +6,13 @@ module.exports = {
     authenticate
 }
 
-function validationAuthentication(req,res,next){
+function validationAuthentication(req, res, next) {
     const token = req.headers['authorization'];
-    if(!token) return res.status(401).send({message: "no token provided"});
-    
-    jwt.verify(token, 'secret-key', (err,decoded)=> {
-        if (err) return res.status(500).send({message : "failed to authenticate"})
-            req.userEmail = decoded.id;
+    if (!token) return res.status(401).send({ message: "no token provided" });
+
+    jwt.verify(token, 'secret-key', (err, decoded) => {
+        if (err) return res.status(500).send({ message: "failed to authenticate" })
+        req.userEmail = decoded.id;
         next();
     })
 }

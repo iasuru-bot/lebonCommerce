@@ -1,5 +1,5 @@
 const { Annonce, Utilisateur, Signalement, Categorie } = require("../models");
-const { Op } = require("sequelize"); 
+const { Op } = require("sequelize");
 
 module.exports = {
     getAllAnnonces,
@@ -36,7 +36,7 @@ async function getAllAnnonces(req, res, next) {
 async function searchAnnonces(req, res, next) {
     try {
         const { query } = req.query;
-        const annonces = await Annonce.findAll({ 
+        const annonces = await Annonce.findAll({
             attributes: { exclude: ['CategorieId', 'createdAt', 'updatedAt', 'UtilisateurId'] }, // Exclude specific attributes
             where: {
                 titre: {
@@ -97,7 +97,7 @@ async function createAnnonce(req, res, next) {
 
 async function getAnnonceById(req, res, next) {
     try {
-        const annonce = await Annonce.findByPk(req.params.id, { 
+        const annonce = await Annonce.findByPk(req.params.id, {
             attributes: { exclude: ['CategorieId', 'createdAt', 'updatedAt', 'UtilisateurId'] }, // Exclude specific attributes
             include: [
                 {
@@ -168,7 +168,7 @@ async function deleteAnnonce(req, res, next) {
         }
 
         const user = await Utilisateur.findOne({ where: { email: req.userEmail } });
-        
+
         if (!user || annonce.UtilisateurId !== user.id) {
             return res.status(403).json({ error: 'You do not have the necessary permissions' });
         }
@@ -189,7 +189,7 @@ async function getSignalementsByAnnonceId(req, res, next) {
         const { id } = req.params;
         const signalements = await Signalement.findAll({
             where: { annonceId: id },
-            attributes: { exclude: ['createdAt', 'updatedAt', 'AnnonceId','UtilisateurId'] }, // Exclude specific attributes
+            attributes: { exclude: ['createdAt', 'updatedAt', 'AnnonceId', 'UtilisateurId'] }, // Exclude specific attributes
             include: [
                 {
                     model: Utilisateur,

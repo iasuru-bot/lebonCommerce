@@ -16,8 +16,8 @@ module.exports = {
     for (var i = 0; i < 100; i++) {
       dummyJSON.push({
         nom: faker.name.lastName(),
-        prenom : faker.name.firstName(),
-        email : faker.internet.email(),
+        prenom: faker.name.firstName(),
+        email: faker.internet.email(),
         motDePasse: faker.internet.password(),
         createdAt: new Date(),
         updatedAt: new Date(),

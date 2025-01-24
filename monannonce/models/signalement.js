@@ -18,22 +18,22 @@ module.exports = (sequelize, DataTypes) => {
     dateSignalement: {
       type: DataTypes.DATE,
       defaultValue: DataTypes.NOW,
-  },
-  message: {
+    },
+    message: {
       type: DataTypes.TEXT,
       allowNull: false,
-  },
-  typeSignalement: {
+    },
+    typeSignalement: {
       type: DataTypes.ENUM('RECLAMATION', 'SPAM', 'AUTRE'), // Exemple de types de signalement
       allowNull: false,
-  },
-  email: {
+    },
+    email: {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
-          isEmail: true,
+        isEmail: true,
       },
-  }
+    }
   }, {
     sequelize,
     modelName: 'Signalement',

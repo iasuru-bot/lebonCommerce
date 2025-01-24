@@ -15,7 +15,7 @@ module.exports = {
     const utilisateurIds = utilisateurs.map(u => u.id);
 
     var dummyJSON = [];
-    const typesSignalement = ['Disponible', 'Indisponible']; 
+    const typesSignalement = ['Disponible', 'Indisponible'];
     const filePaths = [
       'uploads/image1.jpg',
       'uploads/image2.jpg',
@@ -33,7 +33,7 @@ module.exports = {
         categorieId: randomElement(categoryIds),
         utilisateurId: randomElement(utilisateurIds),
         datePublication: faker.date.past(),
-        filePath:randomElement(filePaths),
+        filePath: randomElement(filePaths),
         createdAt: new Date(),
         updatedAt: new Date(),
       });

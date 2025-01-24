@@ -10,9 +10,9 @@ module.exports = {
 async function getAllUtilisateurs(req, res, next) {
     try {
         const utilisateurs = await Utilisateur.findAll({
-            attributes: { exclude: ['createdAt', 'updatedAt', 'motDePasse', 'isAdmin'] }, // Exclude specific attributes
+            attributes: { exclude: ['createdAt', 'updatedAt', 'motDePasse', 'isAdmin'] },
             where: {
-                isAdmin: false // Exclude admin users
+                isAdmin: false 
             }
         });
         res.status(200).json(utilisateurs);
@@ -25,9 +25,9 @@ async function getUtilisateurById(req, res, next) {
     try {
         const id = req.params.id;
         const utilisateur = await Utilisateur.findByPk(id, {
-            attributes: { exclude: ['createdAt', 'updatedAt', 'motDePasse', 'isAdmin'] }, // Exclude specific attributes
+            attributes: { exclude: ['createdAt', 'updatedAt', 'motDePasse', 'isAdmin'] },
             where: {
-                isAdmin: false // Exclude admin users
+                isAdmin: false 
             }
         });
         res.status(200).json(utilisateur);
@@ -53,7 +53,7 @@ async function updateUtilisateur(req, res, next) {
             return res.status(404).json({ error: 'Utilisateur not found' });
         }
 
-        // Vérification des permissions (par exemple, seul un admin ou l'utilisateur lui-même peut mettre à jour)
+        // Vérification des permissions (seul un admin ou l'utilisateur lui-même peut mettre à jour)
         if (requestingUser.id !== utilisateur.id && !requestingUser.admin) {
             return res.status(403).json({ error: 'You do not have the necessary permissions' });
         }

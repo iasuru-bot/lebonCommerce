@@ -1,4 +1,4 @@
-const {Sequelize} = require ('sequelize')
+const { Sequelize } = require('sequelize')
 const Utilisateur = require('./utilisateur')
 const Categorie = require('./categorie')
 const Signalement = require('./signalement')
@@ -19,50 +19,50 @@ async function initModels() {
 
 
         //User.hasMany(trucmuche);const { Sequelize } = require('sequelize');
-const Utilisateur = require('./utilisateur');
-const Categorie = require('./categorie');
-const Signalement = require('./signalement');
-const Annonce = require('./annonce');
+        const Utilisateur = require('./utilisateur');
+        const Categorie = require('./categorie');
+        const Signalement = require('./signalement');
+        const Annonce = require('./annonce');
 
-// DB 
-async function initModels() {
-    const sequelize = new Sequelize(`mariadb://${process.env.DB_USER}:${process.env.DB_PASSWORD}@db:${process.env.DB_HOST}/`, {
-        logging: false,
-    });
+        // DB 
+        async function initModels() {
+            const sequelize = new Sequelize(`mariadb://${process.env.DB_USER}:${process.env.DB_PASSWORD}@db:${process.env.DB_HOST}/`, {
+                logging: false,
+            });
 
-    try {
-        await sequelize.authenticate();
-        console.log('Connection has been established successfully.');
+            try {
+                await sequelize.authenticate();
+                console.log('Connection has been established successfully.');
 
-        const utilisateur = Utilisateur(sequelize);
-        const categorie = Categorie(sequelize);
-        const signalement = Signalement(sequelize);
-        const annonce = Annonce(sequelize);
+                const utilisateur = Utilisateur(sequelize);
+                const categorie = Categorie(sequelize);
+                const signalement = Signalement(sequelize);
+                const annonce = Annonce(sequelize);
 
-        // Define associations
-        categorie.hasMany(annonce);
-        annonce.belongsTo(categorie);
+                // Define associations
+                categorie.hasMany(annonce);
+                annonce.belongsTo(categorie);
 
-        utilisateur.hasMany(annonce);
-        annonce.belongsTo(utilisateur);
+                utilisateur.hasMany(annonce);
+                annonce.belongsTo(utilisateur);
 
-        utilisateur.hasMany(signalement);
-        signalement.belongsTo(utilisateur);
+                utilisateur.hasMany(signalement);
+                signalement.belongsTo(utilisateur);
 
-        annonce.hasMany(signalement);
-        signalement.belongsTo(annonce);
+                annonce.hasMany(signalement);
+                signalement.belongsTo(annonce);
 
-        // Sync models with database
-        await sequelize.sync();
+                // Sync models with database
+                await sequelize.sync();
 
-    } catch (error) {
-        console.error('Unable to connect to the database:', error);
-    }
+            } catch (error) {
+                console.error('Unable to connect to the database:', error);
+            }
 
-    return sequelize;
-}
+            return sequelize;
+        }
 
-module.exports = initModels;
+        module.exports = initModels;
         Categorie.hasMany(Annonce);
         Annonce.belongsTo(Categorie);
 

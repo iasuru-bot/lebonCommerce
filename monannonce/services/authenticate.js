@@ -58,7 +58,7 @@ async function login(req, res) {
         if (!isPasswordValid) return res.status(401).json({ status: "incorrect password" });
 
         const token = jwt.sign({ id: utilisateur.email }, 'secret-key');
-        
+
         // Exclure le mot de passe de l'objet utilisateur avant de le renvoyer
         const { motDePasse: _, ...userWithoutPassword } = utilisateur.toJSON();
 
@@ -75,12 +75,12 @@ async function login(req, res) {
     }
 }
 
+//PAs terminé car comment réussir à faire les deep links
 async function requestPasswordReset(req, res) {
     const { email } = req.body;
     const utilisateur = await Utilisateur.findOne({ where: { email } });
 
     let subject, text, html;
-    console.log(process.env.FRONTEND_URL)
 
     if (!utilisateur) {
         subject = 'Réinitialisation de mot de passe demandée';

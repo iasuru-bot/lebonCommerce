@@ -56,7 +56,6 @@ async function deleteUser(req, res, next) {
 
         const id = req.params.id;
 
-        console.log('id: ' + id);
         // Delete all annonces related to the user
         await Annonce.destroy({ where: { UtilisateurId: id } });
 
