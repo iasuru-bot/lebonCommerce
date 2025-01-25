@@ -3,3 +3,4 @@ db-data
 package.json
 .env
 node_modules
+monannonce/node_modules

@@ -14,15 +14,15 @@ module.exports = {
 async function getAllAnnonces(req, res, next) {
     try {
         const annonces = await Annonce.findAll({
-            attributes: { exclude: ['CategorieId', 'createdAt', 'updatedAt', 'UtilisateurId'] }, // Exclude specific attributes
+            attributes: { exclude: ['CategorieId', 'createdAt', 'updatedAt', 'UtilisateurId'] }, 
             include: [
                 {
                     model: Categorie,
-                    attributes: ['nom'] // Include only the category name
+                    attributes: ['nom'] 
                 },
                 {
                     model: Utilisateur,
-                    attributes: ['nom', 'prenom'] // Include only the user name and email
+                    attributes: ['nom', 'prenom'] 
                 }
             ],
             limit: 100
@@ -37,7 +37,7 @@ async function searchAnnonces(req, res, next) {
     try {
         const { query } = req.query;
         const annonces = await Annonce.findAll({
-            attributes: { exclude: ['CategorieId', 'createdAt', 'updatedAt', 'UtilisateurId'] }, // Exclude specific attributes
+            attributes: { exclude: ['CategorieId', 'createdAt', 'updatedAt', 'UtilisateurId'] }, 
             where: {
                 titre: {
                     [Op.like]: `%${query}%`
@@ -98,7 +98,7 @@ async function createAnnonce(req, res, next) {
 async function getAnnonceById(req, res, next) {
     try {
         const annonce = await Annonce.findByPk(req.params.id, {
-            attributes: { exclude: ['CategorieId', 'createdAt', 'updatedAt', 'UtilisateurId'] }, // Exclude specific attributes
+            attributes: { exclude: ['CategorieId', 'createdAt', 'updatedAt', 'UtilisateurId'] }, 
             include: [
                 {
                     model: Utilisateur,
@@ -189,7 +189,7 @@ async function getSignalementsByAnnonceId(req, res, next) {
         const { id } = req.params;
         const signalements = await Signalement.findAll({
             where: { annonceId: id },
-            attributes: { exclude: ['createdAt', 'updatedAt', 'AnnonceId', 'UtilisateurId'] }, // Exclude specific attributes
+            attributes: { exclude: ['createdAt', 'updatedAt', 'AnnonceId', 'UtilisateurId'] }, 
             include: [
                 {
                     model: Utilisateur,
