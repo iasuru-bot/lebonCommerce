@@ -25,6 +25,7 @@ services:
     expose:
       - "3000"
     working_dir: '/home/app/monannonce'
+    
   monannonce-mailhog:
     image: mailhog/mailhog
     ports: 
@@ -36,6 +37,7 @@ services:
     restart: always
     environment:
       MARIADB_ROOT_PASSWORD: root
+      MARIADB_DATABASE: monannonce
     volumes:
       - './db-data:/var/lib/mysql:rw'
   # Database client
@@ -44,3 +46,12 @@ services:
     restart: always
     ports:
       - 8080:8080
+  
+  # Ngrok
+  monannonce-ngrok:
+    image: wernight/ngrok
+    command: ngrok http monannonce-node:3000
+    ports:
+      - "4040:4040" # Port pour accéder à l'interface web de Ngrok
+    environment:
+      - NGROK_AUTHTOKEN=2gXmn5P8oCI3LqnDClsiG4yWlNu_53WijWsZRxUrXLnatSJnp

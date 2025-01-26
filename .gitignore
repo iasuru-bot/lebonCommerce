@@ -1,3 +1,6 @@
 .npm
 db-data
-monannonce
+package.json
+.env
+node_modules
+monannonce/node_modules
