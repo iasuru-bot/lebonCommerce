@@ -62,7 +62,7 @@ async function searchAnnonces(req, res, next) {
 
 async function createAnnonce(req, res, next) {
     try {
-        const { titre, description, prix, categorieId } = req.body;
+        const { titre, description, prix, categorieId,filePath } = req.body;
 
         // Vérification de l'utilisateur
         const utilisateur = await Utilisateur.findOne({ where: { email: req.userEmail } });

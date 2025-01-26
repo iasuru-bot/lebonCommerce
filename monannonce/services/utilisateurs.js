@@ -1,4 +1,4 @@
-const { Utilisateur, Annonce } = require("../models")
+const { Utilisateur, Annonce, Categorie } = require("../models")
 
 module.exports = {
     getAllUtilisateurs,
@@ -80,9 +80,20 @@ async function updateUtilisateur(req, res, next) {
 async function getAnnoncesByIdUtilisateur(req, res, next) {
     const id = req.params.id
     //check if the user has annonce associated with them
-    const annonces = await Annonce.findAll({ where: { UtilisateurId: id } })
+    const annonces = await Annonce.findAll({ where: { UtilisateurId: id },
+        attributes: { exclude: ['CategorieId', 'createdAt', 'updatedAt', 'UtilisateurId'] }, 
+        include: [
+            {
+                model: Categorie,
+                attributes: ['nom'] 
+            },
+            {
+                model: Utilisateur,
+                attributes: ['nom', 'prenom'] 
+            }
+        ], })
     if (annonces.length > 0) {
-        res.status(201).json({ annonces })
+        res.status(200).json( annonces )
     } else {
         res.status(404).json({ error: 'No annonces found' })
     }

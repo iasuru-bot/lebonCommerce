@@ -9,5 +9,4 @@ router.post('/request-password-reset', requestPasswordReset);
 router.post('/reset-password', resetPassword);
 router.get('/serve/:filename', serveFile);
 
-
 module.exports = router;

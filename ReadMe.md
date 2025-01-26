@@ -36,6 +36,7 @@ docker compose up
 docker compose down
 ```
 
+
 ## Structure du projet
 ```
 lebonCommerce/
@@ -152,6 +153,7 @@ FRONTEND_URL=http://localhost:3000
 ```
 
 ## Routes de l'API
+Lien de l'API postman: https://documenter.getpostman.com/view/31664468/2sAYQfE9PN#13a1ff94-97b1-48b1-bfc6-f6e92f703524
 ### Authentification
 - `POST /public/register` : Inscription d'un utilisateur
 - `POST /public/login` : Connexion d'un utilisateur

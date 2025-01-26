@@ -2,24 +2,26 @@ const formidable = require('formidable');
 const fs = require('fs');
 const path = require('path');
 
-const uploadDir = path.join(__dirname, '../../uploads');
+const UPLOAD_DIR = path.join(__dirname, '../../uploads');
 
-if (!fs.existsSync(uploadDir)) {
-    fs.mkdirSync(uploadDir);
-    console.log(`Upload directory created at ${uploadDir}`);
+if (!fs.existsSync(UPLOAD_DIR)) {
+    fs.mkdirSync(UPLOAD_DIR);
+    console.log(`Upload directory created at ${UPLOAD_DIR}`);
 } else {
-    console.log(`Upload directory exists at ${uploadDir}`);
+    console.log(`Upload directory exists at ${UPLOAD_DIR}`);
 }
 
-async function uploadFile(req, res) {
+
+// impossible de upload un file depuis expo mais ca fonctionne depuis postman on laisse en stand by 
+async function uploadFiles(req, res, next) {
     console.log('Starting file upload process');
     const form = new formidable.IncomingForm();
 
-    form.uploadDir = uploadDir;
+    form.uploadDir = UPLOAD_DIR;
     form.keepExtensions = true;
 
     form.on('fileBegin', (name, file) => {
-        console.log(`Starting to receive file: ${file.name}`);
+        console.log(`Starting to receive file: ${file.originalFilename}`);
     });
 
     form.on('progress', (bytesReceived, bytesExpected) => {
@@ -41,34 +43,28 @@ async function uploadFile(req, res) {
             return res.status(500).json({ error: 'File upload failed' });
         }
 
-        console.log('Form parsed successfully');
-        console.log('Fields:', fields);
-        console.log('Files:', files);
-
-        const file = files.file;
+        const file = files.filetoupload[0];
         if (!file) {
             console.error('No file received');
             return res.status(400).json({ error: 'No file received' });
         }
 
-        const filePath = path.join(uploadDir, file.newFilename || file.name);
-        console.log(`File will be saved to ${filePath}`);
-
-        fs.rename(file.path, filePath, (err) => {
+        const filePath = path.join(UPLOAD_DIR, file.originalFilename || 'uploaded_file');
+        fs.rename(file.filepath, filePath, (err) => {
             if (err) {
                 console.error('Error saving the file:', err);
                 return res.status(500).json({ error: 'File save failed' });
             }
 
             console.log(`File saved successfully to ${filePath}`);
-            res.status(200).json({ filePath });
+            res.status(201).json({ status: 'success', filePath });
         });
     });
 }
 
 async function serveFile(req, res) {
     const { filename } = req.params;
-    const filePath = path.join(uploadDir, filename);
+    const filePath = path.join(UPLOAD_DIR, filename);
 
     fs.access(filePath, fs.constants.F_OK, (err) => {
         if (err) {
@@ -79,6 +75,6 @@ async function serveFile(req, res) {
 }
 
 module.exports = {
-    uploadFile,
-    serveFile,
+    uploadFiles,
+    serveFile
 };

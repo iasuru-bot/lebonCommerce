@@ -4,6 +4,7 @@ const { Utilisateur, sequelize } = require('../models');
 const { mailer } = require('./mailer');
 const crypto = require('crypto');
 
+
 module.exports = {
     register,
     login,
